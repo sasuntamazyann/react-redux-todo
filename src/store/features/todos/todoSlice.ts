@@ -45,13 +45,21 @@ const todoSlice = createSlice({
         (a, b) => Number(a.completed) - Number(b.completed)
       );
     },
+    editTodo(state, action: PayloadAction<{title: string, index: number }>) {
+      state.todos = state.todos.map((todo, index) => {
+        if (index === action.payload.index) {
+          todo.title = action.payload.title;
+        }
+        return todo;
+      });
+    }
   },
   selectors: {
     getTodos: (state) => state.todos,
   },
 });
 
-export const { addTodo, deleteTodo, toggleTodoComplete, sortTodosByCompleted } =
+export const { addTodo, deleteTodo, toggleTodoComplete, sortTodosByCompleted, editTodo } =
   todoSlice.actions;
 export const { getTodos } = todoSlice.selectors;
 
